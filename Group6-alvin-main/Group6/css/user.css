@@ -1,0 +1,90 @@
+
+body, h1, h2, table, th, td, form, button {
+    margin: 0;
+    padding: 0;
+    color: white;
+}
+
+
+body {
+    background-color: black;
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+
+h1 {
+    font-size: 36px;
+    margin-top: 20px;
+    text-transform: uppercase;
+    text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.1);
+}
+
+
+button[name="logout"] {
+    background-color: #ff3333;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button[name="logout"]:hover {
+    background-color: #cc0000;
+}
+.profile-button {
+    background-color: #0074cc; 
+    color: #fff; 
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-left: 10px; 
+}
+
+
+.profile-button:hover {
+    background-color: #005ca3; 
+}
+
+h2 {
+    font-size: 24px;
+    margin-top: 20px;
+    color: #0077ff;
+}
+
+
+table {
+    width: 80%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+
+form[action="reserve.php"] {
+    margin-top: 20px;
+}
+
+button[type="submit"] {
+    background-color: #0077ff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button[type="submit"]:hover {
+    background-color: #0055cc;
+}

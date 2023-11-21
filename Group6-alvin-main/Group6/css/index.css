@@ -1,0 +1,124 @@
+@import url("https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100;0,400;1,300&family=Poppins:wght@100;300;600;700&family=Work+Sans:wght@300&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+  box-sizing: border-box;
+}
+
+.ctn {
+  width: 100%;
+  height: 100vh;
+  background-image: url("/Group6/images/ctu-bg.png");
+  background-size: cover;
+  background-position: center;
+  display: grid;
+  justify-items: center;
+  align-items: center;
+}
+
+.slider {
+  position: relative;
+  width: 60%;
+  min-height: 70vh;
+  height: 70vh;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+  overflow: hidden;
+  transition: all 250ms ease-in-out;
+}
+
+.text {
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  border: 3px solid white;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  width: 60%;
+  padding: 2%;
+  background-color: rgba(0, 0, 0, 0.4);
+  overflow: hidden; 
+}
+
+.text h1 {
+  margin-bottom: 5%;
+}
+
+.bttn {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+}
+
+.fa-sharp {
+  color: white;
+  font-size: large;
+  cursor: pointer;
+}
+
+.login-button,
+.reg-button {
+  padding: 2%;
+  margin-bottom: 2%;
+  width: 60%;
+  background-color: rgba(0, 0, 0, 0.6);
+  border: 1px solid white;
+  cursor: pointer;
+  border-radius: 1.5rem;
+  text-decoration: none;
+  color: white;
+  transition: 0.5s;
+  user-select: none;
+}
+
+.login-button:hover,
+.reg-button:hover {
+  background: black;
+}
+
+.login-submit {
+  margin: 2%;
+  width: 100%;
+}
+
+.modal-content.primary {
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+@media only screen and (min-width: 400px) {
+  .slider {
+    width: 100%; 
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  .slider {
+    width: 100%;
+    height: 50vh;
+  }
+  .text {
+    width: 100%; 
+    height: 50vh; 
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .slider {
+    width: 60%;
+    height: 70vh;
+  }
+  .text {
+    width: 60%;
+    height: 70vh; 
+  }
+}
