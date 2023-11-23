@@ -9,10 +9,12 @@ include('includes/auth.php');
 class ReservationHandler {
     private $conn;
     private $userAuthenticator;
+    private $userID; 
 
     public function __construct($db_connection, $userAuthenticator) {
         $this->conn = $db_connection;
         $this->userAuthenticator = $userAuthenticator;
+        $this->userID = $this->userAuthenticator->getUserId(); 
     }
 
     public function handleReservation() {
@@ -22,13 +24,12 @@ class ReservationHandler {
             exit();
         }
 
-        $userID = $this->userAuthenticator->getUserId();
+        error_log("User ID in handleReservation: " . $this->userID);
 
-       
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $time = htmlspecialchars($_POST['date'], ENT_QUOTES, 'UTF-8');
 
-            if (!$this->userAuthenticator->isUserAuthorized($userID, 'user')) {
+            if (!$this->userAuthenticator->isUserAuthorized($this->userID, 'user')) {
                 $_SESSION['reservation_errors'] = array("Error: You are not authorized to make reservations.");
                 header("Location: reserve.php");
                 exit();
@@ -37,7 +38,7 @@ class ReservationHandler {
             $room_count = htmlspecialchars($_POST['room_count'], ENT_QUOTES, 'UTF-8');
             $purpose = htmlspecialchars($_POST['purpose'], ENT_QUOTES, 'UTF-8');
 
-            $groupmates = $this->prepareGroupmatesArray($userID);
+            $groupmates = $this->prepareGroupmatesArray($this->userID);
 
             $groupUsersCount = $this->getGroupUsersCount($time);
 
@@ -46,7 +47,7 @@ class ReservationHandler {
             try {
                 $this->conn->beginTransaction();
 
-                $this->insertReservation($userID, $time, $room_count, $purpose);
+                $this->insertReservation($this->userID, $time, $room_count, $purpose);
 
                 $reservationId = $this->conn->lastInsertId();
 
@@ -68,13 +69,9 @@ class ReservationHandler {
     private function prepareGroupmatesArray($userID) {
         $groupmates = array();
 
-        if (!$this->isUserPartOfGroup($userID)) {
-            echo "Debug: User is not part of a group. Adding the user to the group...<br>";
-            $groupmates[] = $userID;
-        } else {
-            echo "Debug: User is already part of a group. Checking previous reservation...<br>";
-            echo "Debug: Previous reservation details - date, room count, purpose, etc.<br>";
-        }
+        $groupmates[] = $userID;
+
+       // echo "Debug: User is not part of a group. Adding the user to the group...<br>";
 
         for ($i = 1; $i <= 5; $i++) {
             $groupmateUsername = htmlspecialchars($_POST['groupmate' . $i], ENT_QUOTES, 'UTF-8');
@@ -98,7 +95,7 @@ class ReservationHandler {
     private function validateGroupmates($groupmates, $groupUsersCount, $time) {
         $errors = array();
 
-        if (count($groupmates) < 5) {
+        if (count($groupmates) < 6) {
             $errors[] = "Error: You need a minimum of 6 valid groupmates for the reservation.";
         }
 
@@ -152,7 +149,7 @@ class ReservationHandler {
     private function insertReservation($userID, $time, $room_count, $purpose) {
         $query = "INSERT INTO `reservations` (`user_id`, `time`, `room_count`, `purpose`, `status`) VALUES (:userID, :time, :room_count, :purpose, 'pending')";
 
-        echo "Debug: SQL Query - " . $query . "<br>";
+       // echo "Debug: SQL Query - " . $query . "<br>";
 
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':userID', $userID, PDO::PARAM_INT);
@@ -160,9 +157,9 @@ class ReservationHandler {
         $stmt->bindParam(':room_count', $room_count, PDO::PARAM_INT);
         $stmt->bindParam(':purpose', $purpose, PDO::PARAM_STR);
 
-        echo "Debug: Time - " . $time . "<br>";
-        echo "Debug: Room Count - " . $room_count . "<br>";
-        echo "Debug: Purpose - " . $purpose . "<br>";
+       // echo "Debug: Time - " . $time . "<br>";
+      //  echo "Debug: Room Count - " . $room_count . "<br>";
+       // echo "Debug: Purpose - " . $purpose . "<br>";
 
         if (!$stmt->execute()) {
             $this->conn->rollBack();
@@ -241,7 +238,7 @@ class ReservationHandler {
             }
         } catch (PDOException $e) {
             $this->conn->rollBack();
-            echo "Error: Failed to execute groupmate query. " . $e->getMessage() . "<br>";
+           // echo "Error: Failed to execute groupmate query. " . $e->getMessage() . "<br>";
             exit();
         }
     }
@@ -308,8 +305,8 @@ class ReservationHandler {
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         $userCount = $result['user_count'];
 
-        echo "Debug: Time for getGroupUsersCount - " . $time . "<br>";
-        echo "Debug: Group Users Count - " . $userCount . "<br>";
+       // echo "Debug: Time for getGroupUsersCount - " . $time . "<br>";
+        //echo "Debug: Group Users Count - " . $userCount . "<br>";
 
         return $userCount;
     }
