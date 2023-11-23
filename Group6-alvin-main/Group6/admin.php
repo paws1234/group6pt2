@@ -22,10 +22,7 @@ class AdminDashboard
 
     public function adminDashboard()
     {
-        if (!$this->authenticator->isAdmin()) {
-            header("Location: index.php?error=Unauthorized");
-            exit();
-        }
+        
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
             $this->authenticator->logout();
@@ -42,120 +39,122 @@ class AdminDashboard
 
         ?>
 <!DOCTYPE html>
-<html lang="en">
+        <html lang="en">
 
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
-</head>
+        <head>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Admin Dashboard</title>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+            <link rel="icon" href="images/ctu.png" type="image/x-icon">
+        </head>
 
-<body class="bg-gray-100 font-sans p-4 sm:p-6 md:p-8 lg:p-12 overflow-x-auto">
-    <h1 class="text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-bold text-center mb-8 sm:mb-16">Admin Dashboard</h1>
-    <form method="post" action="" class="flex justify-center">
-        <button type="submit" name="logout"
-            class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 sm:py-4 sm:px-6 lg:px-8 rounded">Logout</button>
-    </form>
+        <body class="bg-gray-100 font-sans p-4 sm:p-6 md:p-8 lg:p-12 overflow-x-auto">
+            <h1
+                class="text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-bold text-center mb-8 sm:mb-16">
+                Admin Dashboard</h1>
+            <form method="post" action="" class="flex justify-center">
+                <button type="submit" name="logout"
+                    class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 sm:py-4 sm:px-6 lg:px-8 rounded">Logout</button>
+            </form>
 
-    <h2 class="text-2xl sm:text-4xl md:text-5xl font-semibold mt-8 sm:mt-16">All Reservations</h2>
-    <div class="mt-4 sm:mt-8 overflow-x-auto">
-        <div class="bg-white shadow overflow-hidden sm:rounded-lg">
-            <div class="sm:hidden"> 
-                <div class="max-w-screen-lg mx-auto p-4 sm:p-6 md:p-8 lg:p-12 overflow-x-auto">
-                    <table class="w-full table-auto sm:table">
-                        <thead class="bg-blue-500 text-white">
-                            <tr>
-                                <th class="px-2 py-2 sm:py-3 sm:px-3">Date and Time</th>
-                                <th class="px-2 py-2 sm:py-3 sm:px-3">Room Count</th>
-                                <th class="px-2 py-2 sm:py-3 sm:px-3">Purpose</th>
-                                <th class="px-2 py-2 sm:py-3 sm:px-3">Groupmates</th>
-                                <th class="px-2 py-2 sm:py-3 sm:px-3">Courses</th>
-                                <th class="px-2 py-2 sm:py-3 sm:px-3">Status</th>
-                                <th class="px-2 py-2 sm:py-3 sm:px-3">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($reservations as $reservation): ?>
+            <h2 class="text-2xl sm:text-4xl md:text-5xl font-semibold mt-8 sm:mt-16">All Reservations</h2>
+            <div class="mt-4 sm:mt-8 overflow-x-auto border">
+                <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+                    <div class="sm:hidden">
+                        <div class="max-w-screen-lg mx-auto p-4 sm:p-6 md:p-8 lg:p-12 overflow-x-auto">
+                            <table class="w-full border border-separate">
+                                <thead class="bg-blue-500 text-white">
+                                    <tr>
+                                        <th class="px-2 py-2 sm:py-3 sm:px-3 border-r">Date and Time</th>
+                                        <th class="px-2 py-2 sm:py-3 sm:px-3 border-r">Room Count</th>
+                                        <th class="px-2 py-2 sm:py-3 sm:px-3 border-r">Purpose</th>
+                                        <th class="px-2 py-2 sm:py-3 sm:px-3 border-r">Groupmates</th>
+                                        <th class="px-2 py-2 sm:py-3 sm:px-3 border-r">Courses</th>
+                                        <th class="px-2 py-2 sm:py-3 sm:px-3 border-r">Status</th>
+                                        <th class="px-2 py-2 sm:py-3 sm:px-3">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($reservations as $reservation): ?>
+                                        <tr>
+                                            <td class="px-2 py-2 sm:py-3 sm:px-3 border-r border-b">
+                                                <?= htmlspecialchars(formatDateTime($reservation['time'])) ?>
+                                            </td>
+                                            <td class="px-2 py-2 sm:py-3 sm:px-3 border-r border-b">
+                                                <?= htmlspecialchars($reservation['room_count']) ?>
+                                            </td>
+                                            <td class="px-2 py-2 sm:py-3 sm:px-3 border-r border-b">
+                                                <?= htmlspecialchars($reservation['purpose']) ?>
+                                            </td>
+                                            <td class="px-2 py-2 sm:py-3 sm:px-3 border-r border-b">
+                                                <?= htmlspecialchars($reservation['groupmates']) ?>
+                                            </td>
+                                            <td class="px-2 py-2 sm:py-3 sm:px-3 border-r border-b">
+                                                <?= htmlspecialchars($reservation['courses']) ?>
+                                            </td>
+                                            <td
+                                                class="px-2 py-2 sm:py-3 sm:px-3 border-r border-b <?= $reservation['status'] === 'pending' ? 'bg-blue-600' : ($reservation['status'] === 'approved' ? 'bg-green-500' : 'bg-red-500') ?>">
+                                                <?= htmlspecialchars($reservation['status']) ?>
+                                            </td>
+                                           <td class="px-2 py-2 sm:py-3 sm:px-3 border-r border-b bg-red-600 hover:bg-red-700">
+                                            <a href="?delete_reservation=<?= $reservation['id'] ?>"
+                                                class="hover:text-white ">Delete</a>
+                                        </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="hidden sm:block">
+                        <table class="w-full border border-separate">
+                            <thead class="bg-blue-500 text-white">
                                 <tr>
-                                    <td class="px-2 py-2 sm:py-3 sm:px-3">
-                                        <?= htmlspecialchars(formatDateTime($reservation['time'])) ?>
-                                    </td>
-                                    <td class="px-2 py-2 sm:py-3 sm:px-3">
-                                        <?= htmlspecialchars($reservation['room_count']) ?>
-                                    </td>
-                                    <td class="px-2 py-2 sm:py-3 sm:px-3">
-                                        <?= htmlspecialchars($reservation['purpose']) ?>
-                                    </td>
-                                    <td class="px-2 py-2 sm:py-3 sm:px-3">
-                                        <?= htmlspecialchars($reservation['groupmates']) ?>
-                                    </td>
-                                    <td class="px-2 py-2 sm:py-3 sm:px-3">
-                                        <?= htmlspecialchars($reservation['courses']) ?>
-                                    </td>
-                                    <td class="px-2 py-2 sm:py-3 sm:px-3 <?= $reservation['status'] === 'pending' ? 'bg-blue-600' : ($reservation['status'] === 'approved' ? 'bg-green-500' : 'bg-red-500') ?>">
-                                        <?= htmlspecialchars($reservation['status']) ?>
-                                    </td>
-                                    <td class="px-2 py-2 sm:py-3 sm:px-3">
-                                        <a href="?delete_reservation=<?= $reservation['id'] ?>"
-                                            class="text-red-500 hover:text-red-700">Delete</a>
-                                    </td>
+                                    <th class="px-2 py-2 sm:py-3 sm:px-3 border-r">Date and Time</th>
+                                    <th class="px-2 py-2 sm:py-3 sm:px-3 border-r">Room Count</th>
+                                    <th class="px-2 py-2 sm:py-3 sm:px-3 border-r">Purpose</th>
+                                    <th class="px-2 py-2 sm:py-3 sm:px-3 border-r">Groupmates</th>
+                                    <th class="px-2 py-2 sm:py-3 sm:px-3 border-r">Courses</th>
+                                    <th class="px-2 py-2 sm:py-3 sm:px-3 border-r">Status</th>
+                                    <th class="px-2 py-2 sm:py-3 sm:px-3">Actions</th>
                                 </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($reservations as $reservation): ?>
+                                    <tr>
+                                        <td class="px-2 py-2 sm:py-3 sm:px-3 border-r border-b">
+                                            <?= htmlspecialchars(formatDateTime($reservation['time'])) ?>
+                                        </td>
+                                        <td class="px-2 py-2 sm:py-3 sm:px-3 border-r border-b">
+                                            <?= htmlspecialchars($reservation['room_count']) ?>
+                                        </td>
+                                        <td class="px-2 py-2 sm:py-3 sm:px-3 border-r border-b">
+                                            <?= htmlspecialchars($reservation['purpose']) ?>
+                                        </td>
+                                        <td class="px-2 py-2 sm:py-3 sm:px-3 border-r border-b">
+                                            <?= htmlspecialchars($reservation['groupmates']) ?>
+                                        </td>
+                                        <td class="px-2 py-2 sm:py-3 sm:px-3 border-r border-b">
+                                            <?= htmlspecialchars($reservation['courses']) ?>
+                                        </td>
+                                        <td
+                                            class="px-2 py-2 sm:py-3 sm:px-3 border-r border-b <?= $reservation['status'] === 'pending' ? 'bg-blue-600' : ($reservation['status'] === 'approved' ? 'bg-green-500' : 'bg-red-500') ?>">
+                                            <?= htmlspecialchars($reservation['status']) ?>
+                                        </td>
+                                       <td class="px-2 py-2 sm:py-3 sm:px-3 border-r border-b bg-red-600 hover:bg-red-700">
+                                            <a href="?delete_reservation=<?= $reservation['id'] ?>"
+                                                class="hover:text-white ">Delete</a>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-            <div class="hidden sm:block">  
-                    <table class="w-full table-auto sm:table">
-                        <thead class="bg-blue-500 text-white">
-                            <tr>
-                                <th class="px-2 py-2 sm:py-3 sm:px-3">Date and Time</th>
-                                <th class="px-2 py-2 sm:py-3 sm:px-3">Room Count</th>
-                                <th class="px-2 py-2 sm:py-3 sm:px-3">Purpose</th>
-                                <th class="px-2 py-2 sm:py-3 sm:px-3">Groupmates</th>
-                                <th class="px-2 py-2 sm:py-3 sm:px-3">Courses</th>
-                                <th class="px-2 py-2 sm:py-3 sm:px-3">Status</th>
-                                <th class="px-2 py-2 sm:py-3 sm:px-3">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($reservations as $reservation): ?>
-                                <tr>
-                                    <td class="px-2 py-2 sm:py-3 sm:px-3">
-                                        <?= htmlspecialchars(formatDateTime($reservation['time'])) ?>
-                                    </td>
-                                    <td class="px-2 py-2 sm:py-3 sm:px-3">
-                                        <?= htmlspecialchars($reservation['room_count']) ?>
-                                    </td>
-                                    <td class="px-2 py-2 sm:py-3 sm:px-3">
-                                        <?= htmlspecialchars($reservation['purpose']) ?>
-                                    </td>
-                                    <td class="px-2 py-2 sm:py-3 sm:px-3">
-                                        <?= htmlspecialchars($reservation['groupmates']) ?>
-                                    </td>
-                                    <td class="px-2 py-2 sm:py-3 sm:px-3">
-                                        <?= htmlspecialchars($reservation['courses']) ?>
-                                    </td>
-                                    <td class="px-2 py-2 sm:py-3 sm:px-3 <?= $reservation['status'] === 'pending' ? 'bg-blue-600' : ($reservation['status'] === 'approved' ? 'bg-green-500' : 'bg-red-500') ?>">
-                                        <?= htmlspecialchars($reservation['status']) ?>
-                                    </td>
-                                    <td class="px-2 py-2 sm:py-3 sm:px-3">
-                                        <a href="?delete_reservation=<?= $reservation['id'] ?>"
-                                            class="text-red-500 hover:text-red-700">Delete</a>
-                                    </td>
-                                </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                </div>
-            
-            
-        </div>
-    </div>
-</body>
+        </body>
 
-</html>
-
+        </html>
 
 
         <?php
