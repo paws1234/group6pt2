@@ -1,5 +1,5 @@
 <?php
-echo phpversion();
+
 
 include('includes/db.php');
 
@@ -76,6 +76,8 @@ class LoginHandler {
                         session_regenerate_id(true);
                         $_SESSION['user_id'] = $row['id'];
                         $_SESSION['user_role'] = $row['role'];
+                        error_log("User ID: " . $_SESSION['user_id']);
+                        error_log("User Role: " . $_SESSION['user_role']);
                         $this->redirectTo($row['role']);
                     } else {
                         $_SESSION['login_error'] = "Invalid username or password";
