@@ -1,8 +1,11 @@
+<?php
+ session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-   
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reservation Form</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
@@ -10,7 +13,7 @@
 <?php
     error_reporting(E_ALL);
     ini_set('display_errors', '1');
-    session_start();
+    
     
     if (isset($_SESSION['reservation_errors']) && is_array($_SESSION['reservation_errors'])) {
         echo '<div class="absolute top-0 left-0 z-10 w-full bg-red-100 border border-red-400 text-red-700 rounded-md inline-block">';
