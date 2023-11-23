@@ -1,7 +1,7 @@
 <?php
 session_start();
 include('includes/db.php');
-include('includes/auth.php');
+require 'includes/auth.php';
 
 function formatDateTime($dateTimeString)
 {
@@ -21,10 +21,7 @@ class UserDashboard
 
     public function userDashboard()
     {
-        if (!$this->authenticator->isLoggedIn()) {
-            header("Location: index.php?error=Unauthorized");
-            exit();
-        }
+       
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
             $this->authenticator->logout();
@@ -119,9 +116,6 @@ class UserDashboard
 </body>
 
 </html>
-
-
-
 
 
         <?php
