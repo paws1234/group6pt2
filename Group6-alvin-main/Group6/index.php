@@ -45,7 +45,7 @@
             </div>
         </div>
         <div class="text">
-            <h1>Welcome to the<br>Computer Lab <br>Reservation System</h1>
+               <h1>Welcome to the<br>CTU Library <br> Discussion Room <br>Reservation System</h1>
             <div class="bttn">
                 <a class="login-button" data-bs-toggle="modal" data-bs-target="#login-modal"
                     data-bs-whatever="login-modal">
@@ -174,6 +174,4 @@
             </div>
         </div>
     </div>
-
-
 </html>
